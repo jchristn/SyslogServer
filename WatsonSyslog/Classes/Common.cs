@@ -20,10 +20,7 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 using System.Xml.XPath;
-using Newtonsoft.Json;
-using Mono.Posix;
-using Mono.Unix;
-using Mono.Unix.Native;
+using Newtonsoft.Json; 
 
 namespace WatsonSyslog
 {
@@ -53,57 +50,7 @@ namespace WatsonSyslog
         #endregion
 
         #region Public-Methods
-
-        #region Environment
-
-        public static bool IsAdmin()
-        {
-            int platform = (int)Environment.OSVersion.Platform;
-            if ((platform == 4) || (platform == 6) || (platform == 128))
-            {
-                #region Linux
-
-                // see http://stackoverflow.com/questions/2615997/winforms-console-application-on-mono-how-to-know-it-runs-as-root
-                if (Mono.Unix.Native.Syscall.getuid() == 0) return true;
-
-                #endregion
-            }
-            else
-            {
-                #region Windows
-
-                // see http://stackoverflow.com/questions/11660184/c-sharp-check-if-run-as-administrator
-                var identity = WindowsIdentity.GetCurrent();
-                var principal = new WindowsPrincipal(identity);
-                if (principal.IsInRole(WindowsBuiltInRole.Administrator)) return true;
-
-                #endregion
-            }
-
-            return false;
-        }
-
-        public static void ExitApplication(string method, string text, int returnCode)
-        {
-            Console.WriteLine("---");
-            Console.WriteLine("");
-            Console.WriteLine("The application has exited.");
-            Console.WriteLine("");
-            Console.WriteLine("  Requested by : " + method);
-            Console.WriteLine("  Reason text  : " + text);
-            Console.WriteLine("");
-            Console.WriteLine("---");
-            Environment.Exit(returnCode);
-            return;
-        }
-
-        public static string GetPathSeparator()
-        {
-            return @"\";
-        }
-
-        #endregion
-
+         
         #region Serialization
 
         public static string SerializeJsonBuiltIn(object obj)
@@ -1954,87 +1901,7 @@ namespace WatsonSyslog
                 return false;
             }
         }
-
-        public static bool WalkDirectory(
-            int depth,
-            string directory,
-            bool prependFilename,
-            out List<string> subdirectories,
-            out List<string> files,
-            out long bytes,
-            bool recursive)
-        {
-            subdirectories = new List<string>();
-            files = new List<string>();
-            bytes = 0;
-
-            try
-            {
-                subdirectories = Common.GetSubdirectoryList(directory, false);
-                files = Common.GetFileList(directory, prependFilename);
-
-                if (files != null && files.Count > 0)
-                {
-                    foreach (String currFile in files)
-                    {
-                        FileInfo fi = new FileInfo(currFile);
-                        bytes += fi.Length;
-                    }
-                }
-
-                List<string> queueSubdirectories = new List<string>();
-                List<string> queueFiles = new List<string>();
-                long queueBytes = 0;
-
-                if (recursive)
-                {
-                    if (subdirectories == null || subdirectories.Count < 1) return true;
-                    depth += 2;
-
-                    foreach (string curr in subdirectories)
-                    {
-                        List<string> childSubdirectories = new List<string>();
-                        List<string> childFiles = new List<string>();
-                        long childBytes = 0;
-
-                        WalkDirectory(
-                            depth,
-                            curr,
-                            prependFilename,
-                            out childSubdirectories,
-                            out childFiles,
-                            out childBytes,
-                            true);
-
-                        if (childSubdirectories != null)
-                            foreach (string childSubdir in childSubdirectories)
-                                queueSubdirectories.Add(childSubdir);
-
-                        if (childFiles != null)
-                            foreach (string childFile in childFiles)
-                                queueFiles.Add(childFile);
-
-                        queueBytes += childBytes;
-                    }
-                }
-
-                if (queueSubdirectories != null)
-                    foreach (string queueSubdir in queueSubdirectories)
-                        subdirectories.Add(queueSubdir);
-
-                if (queueFiles != null)
-                    foreach (string queueFile in queueFiles)
-                        files.Add(queueFile);
-
-                bytes += queueBytes;
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
-
+         
         public static bool DirectoryStatistics(
             DirectoryInfo dirinfo,
             bool recursive,
@@ -2125,37 +1992,7 @@ namespace WatsonSyslog
                 return false;
             }
         }
-
-        public static List<string> GetFileList(string directory, bool prependFilename)
-        {
-            try
-            {
-                /*
-                 * 
-                 * Returns only the filename unless prependFilename is set
-                 * If prependFilename is set, directory is prepended
-                 * 
-                 */
-
-                string separator = GetPathSeparator();
-                DirectoryInfo info = new DirectoryInfo(directory);
-                FileInfo[] files = info.GetFiles().OrderBy(p => p.CreationTime).ToArray();
-                List<string> fileList = new List<string>();
-
-                foreach (FileInfo file in files)
-                {
-                    if (prependFilename) fileList.Add(directory + separator + file.Name);
-                    else fileList.Add(file.Name);
-                }
-
-                return fileList;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-
+         
         public static bool WriteFile(string filename, string content, bool append)
         {
             using (StreamWriter writer = new StreamWriter(filename, append))
