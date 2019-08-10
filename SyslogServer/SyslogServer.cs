@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -26,9 +27,9 @@ namespace WatsonSyslog
         {
             #region Read-Config-File
 
-            if (Common.FileExists("syslog.json"))
+            if (File.Exists("syslog.json"))
             {
-                _SettingsContents = Common.ReadTextFile("syslog.json");
+                _SettingsContents = Encoding.UTF8.GetString(File.ReadAllBytes("syslog.json"));
             } 
 
             if (String.IsNullOrEmpty(_SettingsContents))
@@ -50,7 +51,7 @@ namespace WatsonSyslog
                 }
             }
 
-            if (!Common.DirectoryExists(_Settings.LogFileDirectory)) Common.CreateDirectory(_Settings.LogFileDirectory);
+            if (!Directory.Exists(_Settings.LogFileDirectory)) Directory.CreateDirectory(_Settings.LogFileDirectory);
 
             #endregion
             

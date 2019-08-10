@@ -18,9 +18,9 @@ namespace WatsonSyslog
         public static Settings Default()
         {
             Settings ret = new Settings();
-            ret.Version = "Watson Syslog Server v1.0.0";
+            ret.Version = "Watson Syslog Server v1.0.1";
             ret.UdpPort = 514; 
-            ret.DisplayTimestamps = true; 
+            ret.DisplayTimestamps = false; 
             ret.LogFileDirectory = "logs\\";
             ret.LogFilename = "log.txt";
             ret.LogWriterIntervalSec = 10;
