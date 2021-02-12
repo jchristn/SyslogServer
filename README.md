@@ -23,6 +23,10 @@ Watson Syslog Server will automatically start using a default configuration list
 
 Do you need help or have feedback?  Contact me at joel at maraudersoftware.com dot com or file an issue here!
 
+## Need TCP or TLS?
+
+If you prefer a solution that allows you to also use TCP or TLS, I would encourage you to take a look at: https://github.com/ststeiger/NetCoreSyslogServer
+
 ## New in v1.0.0
 
 - Initial release
