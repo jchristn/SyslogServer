@@ -26,9 +26,9 @@ namespace WatsonSyslog
     /// <summary>
     /// Commonly used static methods.
     /// </summary>
-    public static class Common
+    internal static class Common
     { 
-        public static string SerializeJson(object obj)
+        internal static string SerializeJson(object obj)
         {
             if (obj == null) return null;
             string json = JsonConvert.SerializeObject(
@@ -42,7 +42,7 @@ namespace WatsonSyslog
             return json;
         }
           
-        public static T DeserializeJson<T>(string json)
+        internal static T DeserializeJson<T>(string json)
         {
             if (String.IsNullOrEmpty(json)) throw new ArgumentNullException(nameof(json));
 
@@ -60,13 +60,13 @@ namespace WatsonSyslog
             }
         }
 
-        public static T DeserializeJson<T>(byte[] data)
+        internal static T DeserializeJson<T>(byte[] data)
         {
             if (data == null || data.Length < 1) throw new ArgumentNullException(nameof(data));
             return DeserializeJson<T>(Encoding.UTF8.GetString(data));
         }
           
-        public static bool InputBoolean(string question, bool yesDefault)
+        internal static bool InputBoolean(string question, bool yesDefault)
         {
             Console.Write(question);
 
@@ -109,7 +109,7 @@ namespace WatsonSyslog
             }
         }
 
-        public static string InputString(string question, string defaultAnswer, bool allowNull)
+        internal static string InputString(string question, string defaultAnswer, bool allowNull)
         {
             while (true)
             {
@@ -135,7 +135,7 @@ namespace WatsonSyslog
             }
         }
 
-        public static int InputInteger(string question, int defaultAnswer, bool positiveOnly, bool allowZero)
+        internal static int InputInteger(string question, int defaultAnswer, bool positiveOnly, bool allowZero)
         {
             while (true)
             {

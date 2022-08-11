@@ -6,25 +6,102 @@ using System.Threading.Tasks;
 
 namespace WatsonSyslog
 {
+    /// <summary>
+    /// Settings.
+    /// </summary>
     public class Settings
     {
-        public string Version { get; set; }
-        public int UdpPort { get; set; } 
-        public bool DisplayTimestamps { get; set; }  
-        public string LogFileDirectory { get; set; }
-        public string LogFilename { get; set; }
-        public int LogWriterIntervalSec { get; set; } 
+        #region Public-Members
 
-        public static Settings Default()
+        /// <summary>
+        /// UDP port on which to listen.
+        /// </summary>
+        public int UdpPort
         {
-            Settings ret = new Settings();
-            ret.Version = "Watson Syslog Server v1.0.1";
-            ret.UdpPort = 514; 
-            ret.DisplayTimestamps = false; 
-            ret.LogFileDirectory = "logs\\";
-            ret.LogFilename = "log.txt";
-            ret.LogWriterIntervalSec = 10;
-            return ret;
+            get
+            {
+                return _UdpPort;
+            }
+            set
+            {
+                if (value < 0 || value > 65535) throw new ArgumentOutOfRangeException(nameof(UdpPort));
+                _UdpPort = value;
+            }
         }
+
+        /// <summary>
+        /// Flag to enable or disable displaying timestamps.
+        /// </summary>
+        public bool DisplayTimestamps { get; set; } = true;
+
+        /// <summary>
+        /// Directory in which to write log files.
+        /// </summary>
+        public string LogFileDirectory { get; set; } = "./logs/";
+
+        /// <summary>
+        /// Log filename.
+        /// </summary>
+        public string LogFilename { get; set; } = "log.txt";
+
+        /// <summary>
+        /// Number of seconds between each log file update.
+        /// </summary>
+        public int LogWriterIntervalSec
+        {
+            get
+            {
+                return _LogWriterIntervalSec;
+            }
+            set
+            {
+                if (value < 1) throw new ArgumentOutOfRangeException(nameof(LogWriterIntervalSec));
+                _LogWriterIntervalSec = value;
+            }
+        }
+
+        #endregion
+
+        #region Private-Members
+
+        private int _UdpPort = 514;
+        private int _LogWriterIntervalSec = 10;
+
+        #endregion
+
+        #region Constructors-and-Factories
+
+        /// <summary>
+        /// Instantiate.
+        /// </summary>
+        public Settings()
+        {
+
+        }
+
+        #endregion
+
+        #region Public-Methods
+
+        /// <summary>
+        /// Human readable representation of the object.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("  UDP port              : " + UdpPort + Environment.NewLine);
+            sb.Append("  Display timestamps    : " + DisplayTimestamps + Environment.NewLine);
+            sb.Append("  Log file directory    : " + LogFileDirectory + Environment.NewLine);
+            sb.Append("  Log filename          : " + LogFilename + Environment.NewLine);
+            sb.Append("  Writer interval (sec) : " + LogWriterIntervalSec + Environment.NewLine);
+            return sb.ToString();
+        }
+
+        #endregion
+
+        #region Private-Methods
+
+        #endregion
     }
 }

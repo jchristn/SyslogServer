@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SyslogServer</name>
+    </assembly>
+    <members>
+        <member name="T:WatsonSyslog.Common">
+            <summary>
+            Commonly used static methods.
+            </summary>
+        </member>
+        <member name="T:WatsonSyslog.Settings">
+            <summary>
+            Settings.
+            </summary>
+        </member>
+        <member name="P:WatsonSyslog.Settings.UdpPort">
+            <summary>
+            UDP port on which to listen.
+            </summary>
+        </member>
+        <member name="P:WatsonSyslog.Settings.DisplayTimestamps">
+            <summary>
+            Flag to enable or disable displaying timestamps.
+            </summary>
+        </member>
+        <member name="P:WatsonSyslog.Settings.LogFileDirectory">
+            <summary>
+            Directory in which to write log files.
+            </summary>
+        </member>
+        <member name="P:WatsonSyslog.Settings.LogFilename">
+            <summary>
+            Log filename.
+            </summary>
+        </member>
+        <member name="P:WatsonSyslog.Settings.LogWriterIntervalSec">
+            <summary>
+            Number of seconds between each log file update.
+            </summary>
+        </member>
+        <member name="M:WatsonSyslog.Settings.#ctor">
+            <summary>
+            Instantiate.
+            </summary>
+        </member>
+        <member name="M:WatsonSyslog.Settings.ToString">
+            <summary>
+            Human readable representation of the object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:WatsonSyslog.SyslogServer">
+            <summary>
+            Watson syslog server.
+            </summary>
+        </member>
+    </members>
+</doc>
