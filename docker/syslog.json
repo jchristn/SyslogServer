@@ -1,0 +1,7 @@
+{
+  "UdpPort": 514,
+  "DisplayTimestamps": false,
+  "LogFileDirectory": "./logs/",
+  "LogFilename": "log.txt",
+  "LogWriterIntervalSec": 10
+}

@@ -19,4 +19,4 @@ Build/compile and run the binary.
 
 ## Running in Docker
 
-Refer to the `docker` directory.  A build called `jchristn/syslogserver` has been stored on [Docker Hub](https://hub.docker.com/r/jchristn/syslogserver).
+Refer to the `docker` directory.  A build called `jchristn/syslogserver` has been stored on [Docker Hub](https://hub.docker.com/r/jchristn/syslogserver).  Refer to the `docker` directory for sample deployment.
