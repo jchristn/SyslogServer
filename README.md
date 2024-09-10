@@ -1,48 +1,22 @@
-﻿# Watson Syslog Server
-
-[![][nuget-img]][nuget]
-
-[nuget]:     https://www.nuget.org/packages/BigQ.dll
-[nuget-img]: https://badge.fury.io/nu/Object.svg
+﻿# Syslog Server
 
 ## Simple Syslog Server in C#
 
-Watson Syslog Server will automatically start using a default configuration listening on UDP/514 and storing log files in the ```logs\``` directory.  If you wish to change this, create a file called ```syslog.json``` with the following structure:
+Syslog Server will automatically start using a default configuration listening on UDP/514 and storing log files in the `./logs/` directory.  If you wish to change this, create a file called `syslog.json` with the following structure:
 ```
 {
-  "Version": "Watson Syslog Server v1.0.0",
   "UdpPort": 514,
   "DisplayTimestamps": true,
-  "LogFileDirectory": "logs\\",
+  "LogFileDirectory": "./logs/",
   "LogFilename": "log.txt",
   "LogWriterIntervalSec": 10
 }
 ```
 
-## Help or Feedback
-
-Do you need help or have feedback?  Contact me at joel at maraudersoftware.com dot com or file an issue here!
-
-## Need TCP or TLS?
-
-If you prefer a solution that allows you to also use TCP or TLS, I would encourage you to take a look at: https://github.com/ststeiger/NetCoreSyslogServer
-
-## New in v1.0.0
-
-- Initial release
- 
 ## Starting the Server
 
 Build/compile and run the binary.
 
-## Running under Mono
+## Running in Docker
 
-This app should work well in Mono environments.  It is recommended that when running under Mono, you execute the containing EXE using --server and after using the Mono Ahead-of-Time Compiler (AOT).
-```
-mono --aot=nrgctx-trampolines=8096,nimt-trampolines=8096,ntrampolines=4048 --server myapp.exe
-mono --server myapp.exe
-```
-
-## Version History
-
-Notes from previous versions (starting with v1.0.0) will be moved here.
+Refer to the `docker` directory.  A build called `jchristn/syslogserver` has been stored on [Docker Hub](https://hub.docker.com/r/jchristn/syslogserver).

@@ -1,0 +1,17 @@
+services:
+
+  #
+  # SyslogServer
+  # See https://hub.docker.com/r/jchristn/syslogserver
+  # and https://github.com/jchristn/syslogserver
+  #
+
+  litegraph:
+    container_name: 'syslogserver'
+    image: 'jchristn/syslogserver:v2.0.0'
+    network_mode: 'host'
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./syslog.json:/app/syslog.json
+      - ./logs/:/app/logs/

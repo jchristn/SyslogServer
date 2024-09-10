@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WatsonSyslog
+﻿namespace Syslog
 {
+    using System;
+    using System.Text;
+
     /// <summary>
     /// Settings.
     /// </summary>
@@ -32,7 +29,7 @@ namespace WatsonSyslog
         /// <summary>
         /// Flag to enable or disable displaying timestamps.
         /// </summary>
-        public bool DisplayTimestamps { get; set; } = true;
+        public bool DisplayTimestamps { get; set; } = false;
 
         /// <summary>
         /// Directory in which to write log files.
@@ -90,6 +87,7 @@ namespace WatsonSyslog
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
+            sb.Append("Syslog server settings  : " + Environment.NewLine);
             sb.Append("  UDP port              : " + UdpPort + Environment.NewLine);
             sb.Append("  Display timestamps    : " + DisplayTimestamps + Environment.NewLine);
             sb.Append("  Log file directory    : " + LogFileDirectory + Environment.NewLine);
