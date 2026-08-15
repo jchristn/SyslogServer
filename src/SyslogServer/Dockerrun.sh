@@ -23,5 +23,5 @@ docker run \
   -e "TERM=xterm-256color" \
   -v ./syslog.json:/app/syslog.json \
   -v ./logs/:/app/logs/ \
-  jchristn/syslogserver:$IMG_TAG
+  jchristn77/syslogserver:$IMG_TAG
 

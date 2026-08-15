@@ -20,7 +20,7 @@ docker run ^
   -e "TERM=xterm-256color" ^
   -v .\syslog.json:/app/syslog.json ^
   -v .\logs\:/app/logs/ ^
-  jchristn/syslogserver:%1
+  jchristn77/syslogserver:%1
 
 GOTO :Done
 

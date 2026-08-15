@@ -2,13 +2,13 @@ services:
 
   #
   # SyslogServer
-  # See https://hub.docker.com/r/jchristn/syslogserver
+  # See https://hub.docker.com/r/jchristn77/syslogserver
   # and https://github.com/jchristn/syslogserver
   #
 
-  litegraph:
+  syslogserver:
     container_name: 'syslogserver'
-    image: 'jchristn/syslogserver:v2.0.0'
+    image: 'jchristn77/syslogserver:v2.0.0'
     network_mode: 'host'
     stdin_open: true
     tty: true
