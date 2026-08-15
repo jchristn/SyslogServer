@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net8.0;net10.0</TargetFrameworks>
+		<ImplicitUsings>disable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+		<IsPackable>false</IsPackable>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Touchstone.Core" Version="0.1.12" />
+		<PackageReference Include="SerializationHelper" Version="2.0.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\SyslogServer\SyslogServer.csproj" />
+	</ItemGroup>
+
+</Project>
