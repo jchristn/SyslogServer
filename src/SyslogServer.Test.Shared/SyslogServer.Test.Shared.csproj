@@ -10,7 +10,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Touchstone.Core" Version="0.1.12" />
-		<PackageReference Include="SerializationHelper" Version="2.0.1" />
+		<PackageReference Include="SerializationHelper" Version="2.0.3" />
 	</ItemGroup>
 
 	<ItemGroup>

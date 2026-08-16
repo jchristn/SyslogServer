@@ -46,7 +46,8 @@ namespace SyslogServer.Test.Shared
                 BuildLogWriterIntervalSuite(),
                 BuildPropertiesSuite(),
                 BuildToStringSuite(),
-                BuildSerializationSuite()
+                BuildSerializationSuite(),
+                BuildDeserializationEdgeCasesSuite()
             };
         }
 
@@ -374,6 +375,58 @@ namespace SyslogServer.Test.Shared
             };
 
             return new TestSuiteDescriptor(suite, "Settings: JSON serialization", cases);
+        }
+
+        private static TestSuiteDescriptor BuildDeserializationEdgeCasesSuite()
+        {
+            const string suite = "Settings.Deserialization";
+            List<TestCaseDescriptor> cases = new List<TestCaseDescriptor>
+            {
+                // Positive: a hand-edited config file that only overrides one field
+                // must keep every other field at its default value.
+                Case(suite, "partial-json-retains-defaults", "Partial JSON overrides one field and keeps the rest at defaults", () =>
+                {
+                    Settings restored = _Serializer.DeserializeJson<Settings>("{\"UdpPort\":2000}");
+                    Check.Equal(2000, restored.UdpPort);
+                    Check.False(restored.DisplayTimestamps);
+                    Check.Equal("./logs/", restored.LogFileDirectory);
+                    Check.Equal("log.txt", restored.LogFilename);
+                    Check.Equal(10, restored.LogWriterIntervalSec);
+                }),
+
+                // Positive: an empty JSON object yields an all-defaults instance.
+                Case(suite, "empty-object-is-all-defaults", "Empty JSON object deserializes to all default values", () =>
+                {
+                    Settings restored = _Serializer.DeserializeJson<Settings>("{}");
+                    Check.Equal(514, restored.UdpPort);
+                    Check.False(restored.DisplayTimestamps);
+                    Check.Equal("./logs/", restored.LogFileDirectory);
+                    Check.Equal("log.txt", restored.LogFilename);
+                    Check.Equal(10, restored.LogWriterIntervalSec);
+                }),
+
+                // Negative: an out-of-range UdpPort in the config must be rejected by the
+                // property setter rather than silently accepted.
+                Case(suite, "rejects-out-of-range-udp-port", "Deserializing an out-of-range UdpPort throws", () =>
+                {
+                    Check.Throws<Exception>(() => _Serializer.DeserializeJson<Settings>("{\"UdpPort\":70000}"));
+                }),
+
+                // Negative: an out-of-range LogWriterIntervalSec must likewise be rejected.
+                Case(suite, "rejects-out-of-range-interval", "Deserializing an out-of-range LogWriterIntervalSec throws", () =>
+                {
+                    Check.Throws<Exception>(() => _Serializer.DeserializeJson<Settings>("{\"LogWriterIntervalSec\":0}"));
+                }),
+
+                // Negative: malformed JSON (a corrupt settings file) must throw rather than
+                // return a partially-populated object.
+                Case(suite, "rejects-malformed-json", "Deserializing malformed JSON throws", () =>
+                {
+                    Check.Throws<Exception>(() => _Serializer.DeserializeJson<Settings>("{ this is not valid json"));
+                })
+            };
+
+            return new TestSuiteDescriptor(suite, "Settings: JSON deserialization edge cases", cases);
         }
 
         #endregion
